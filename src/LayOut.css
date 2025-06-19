@@ -1,0 +1,28 @@
+nav {
+    position: fixed;
+    display: flex;
+    top: 2rem;
+    left: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 95vw;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    gap: 2rem;
+}
+
+.playlist-drawer {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.playlist-drawer svg {
+    position: absolute;
+    right: 1em;
+}
