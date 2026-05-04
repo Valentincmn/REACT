@@ -3,7 +3,7 @@ import PlaylistDrawer from "./PlaylistDrawer";
 
 import "./Layout.css"
 
-const Layout = ({ playlistTracks, setPlaylistTracks }) => {
+const Layout = ({ playlistTracks }) => {
   return (
     <>
       <nav>
@@ -34,7 +34,7 @@ const Layout = ({ playlistTracks, setPlaylistTracks }) => {
           </li>
         </ul>
 
-        <PlaylistDrawer playlistTracks={playlistTracks} setPlaylistTracks={setPlaylistTracks} />
+        <PlaylistDrawer playlistTracks={playlistTracks} />
 
       </nav>
 

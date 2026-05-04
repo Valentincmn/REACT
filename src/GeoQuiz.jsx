@@ -26,59 +26,38 @@ function GeoQuiz() {
     const [round, setRound] = useState(1)
     const [correction, setCorrection] = useState("")
 
-    // On vient fetch l'API pour recup la liste des pays lors du premier render 
-    // mais aussi lorsque le state "round" change de valeur
+    // Fetch API au premier render et à chaque changement de manche
     useEffect(() => {
-        fetchAPI()
-    }, [round]) 
+        function fetchOptions(currentIndex, data) {
+            const random = Math.floor(Math.random() * 4)
+            const newArray = []
 
-    // Notre fonction pour fetch 
-    function fetchAPI() {
-        fetch( "https://restcountries.com/v3.1/all")
-        .then(res => res.json())
-        .then(data => {
-            // On vide le message dit de correction (Bonne ou mauvaise réponse)
-            setCorrection("")
-
-            // On genere un index aléatoire pour recup un pays aléatoire
-            let randomIndex = Math.floor(Math.random() * data.length)
-            // On enregistre le pays dans le state "country"
-            setCountry(data[randomIndex])
-            // On appelle la fonction d'affichage des options en lui passant l'index du pays 
-            // (pour avoir la bonne réponse et pouvoir comparer) et aussi data qui contient la liste des pays 
-            // afin d'y piocher 3 autres pays random pour les options
-            fetchOptions(randomIndex, data)
-        })
-        .catch(error => console.log(error))
-    }
-
-    function fetchOptions(currentIndex, data) {
-        // On génère un chiffre random dans l'optique de mélanger les elems du tableau de réponses
-        // (afin que la bonne réponse ne soit pas toujours au meme endroit)
-        let random = Math.floor(Math.random() * 4)
-
-        // On crée un tableau destiné à recevoir nos options 
-        let newArray = []
-
-        // Avec une boucle on vient ajouter 3 fois un pays aléatoire à notre tableau 
-        // plus le pays dont le drapeau est affiché que l'on ajoute au tableau après 
-        // l'index aléatoire généré plus haut (random)
-        for (let i=0; i < 4; i++) {
-            if (i == random) {
-                newArray.push(data[currentIndex])
-            } else {
-                let randomIndex =  Math.floor(Math.random() * data.length)
-
-                if (randomIndex != currentIndex) {
-                    newArray.push(data[randomIndex])
+            for (let i = 0; i < 4; i++) {
+                if (i === random) {
+                    newArray.push(data[currentIndex])
                 } else {
-                    newArray.push(data[randomIndex + 1])
+                    const randomIndex = Math.floor(Math.random() * data.length)
+
+                    if (randomIndex !== currentIndex) {
+                        newArray.push(data[randomIndex])
+                    } else {
+                        newArray.push(data[randomIndex + 1])
+                    }
                 }
             }
+            setOptions(newArray)
         }
-        // On vient ajouter notre tableau d'options au state "options"
-        setOptions(newArray)
-    }
+
+        fetch("https://restcountries.com/v3.1/all")
+            .then((res) => res.json())
+            .then((data) => {
+                setCorrection("")
+                const randomIndex = Math.floor(Math.random() * data.length)
+                setCountry(data[randomIndex])
+                fetchOptions(randomIndex, data)
+            })
+            .catch((error) => console.log(error))
+    }, [round])
 
     // Fonction qui vioent vérifier la réponse, mettre à jour le score, 
     // afficher le message dit de "correction" et passe au tour suivant au bout de 3 sec

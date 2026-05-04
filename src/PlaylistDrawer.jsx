@@ -5,7 +5,7 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 
 import { useState } from "react"
 
-export default function PlaylistDrawer({ playlistTracks, setPlaylistTracks }) {
+export default function PlaylistDrawer({ playlistTracks }) {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {

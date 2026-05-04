@@ -5,22 +5,20 @@ import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 
 import "./Album.css"
 
-function Album() {
+function Album({ playlistTracks = [], setPlaylistTracks }) {
     const [album, setAlbum] = useState(null)
 
-
     const { id } = useParams()
-    let apiLink = `https://itunes.apple.com/lookup?id=${id}&entity=song`
 
     useEffect(() => {
+        const apiLink = `https://itunes.apple.com/lookup?id=${id}&entity=song`
         fetch(apiLink)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setAlbum(data.results)
             })
             .catch(err => console.log(err))
-    }, [])
+    }, [id])
 
     useEffect(() => {
         localStorage.setItem("playlist", JSON.stringify(playlistTracks))
@@ -46,8 +44,6 @@ function Album() {
     function addToPlaylist(track) {
         setPlaylistTracks([...playlistTracks, track])
     }
-
-    console.log(playlistTracks)
 
     return (
         <>

@@ -1,6 +1,3 @@
-import { useState, useEffect } from "react"
-
-
 function Home() {
     function fetchAPI() {
         fetch("http://localhost:3000/test")

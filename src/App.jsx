@@ -13,7 +13,7 @@ import './App.css'
 import PlaylistDrawer from "./PlaylistDrawer.jsx"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
       
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout playlistTracks={playlistTracks} setPlaylistTracks={setPlaylistTracks} />}>
+          <Route path="/" element={<Layout playlistTracks={playlistTracks} />}>
             <Route index element={<Home />} />
             <Route path="quiz" element={<Quiz />} />
             <Route path="input" element={<Input />} />
